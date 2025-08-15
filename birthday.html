@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Timeless Friendship</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f0f4;
+      color: #333;
+      text-align: center;
+      padding: 40px;
+      overflow-x: hidden;
+      transition: background 1s ease;
+    }
+
+    .page { display: none; }
+    .active { display: block; }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .yes { background: #ff6f91; color: rgb(255, 55, 55); }
+    .no { background: #fefefe; }
+
+    .border-soft {
+      padding: 20px;
+      border-radius: 16px;
+      background: #fff;
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 20px auto;
+      transition: all 0.4s ease;
+    }
+
+    .border-soft::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; bottom: -2px; right: -2px;
+      background: linear-gradient(135deg, #ff6f91, #ffc0cb, #ff6f91);
+      background-size: 300% 300%;
+      animation: borderMove 6s ease infinite;
+      border-radius: 18px;
+      z-index: -1;
+    }
+
+    @keyframes borderMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .border-glow {
+      padding: 20px;
+      border-radius: 16px;
+      background: #fff;
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 20px auto;
+      box-shadow: 0 0 20px rgba(255, 111, 145, 0.8), 0 0 40px rgba(255, 192, 203, 0.6);
+      animation: glowPulse 3s infinite ease-in-out;
+      white-space: pre-wrap; /* penting untuk \n */
+      line-height: 1.5; /* spasi antar baris */
+    }
+
+    .border-glow::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: linear-gradient(45deg, #ff6f91, #ffc0cb, #ff6f91);
+      border-radius: 18px;
+      z-index: -1;
+      filter: blur(10px);
+      opacity: 0.9;
+      animation: glowShift 5s linear infinite;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 10px rgba(255,111,145,0.6), 0 0 20px rgba(255,192,203,0.4); }
+      50% { box-shadow: 0 0 30px rgba(255,111,145,0.9), 0 0 60px rgba(255,192,203,0.7); }
+      100% { box-shadow: 0 0 10px rgba(255,111,145,0.6), 0 0 20px rgba(255,192,203,0.4); }
+    }
+
+    @keyframes glowShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #typewriter {
+      white-space: pre-wrap;
+      text-align: left;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .flower-bg {
+      background-image: url('https://www.transparenttextures.com/patterns/flowers.png');
+      background-color: #fff0f5;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 24px;
+      color: #fd557c;
+      animation: floatUp 4s linear infinite;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+
+    .flower {
+      position: fixed;
+      top: -30px;
+      font-size: 20px;
+      animation: fallDown 6s linear infinite;
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    @keyframes fallDown {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #fff, 0 0 10px #fff, 0 0 12px #ff8bb3;
+      animation: sparkleAnim 1.5s ease-in-out infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes sparkleAnim {
+      0% { transform: scale(0.8) rotate(0deg); opacity: 0.5; }
+      50% { transform: scale(1.4) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0.8) rotate(360deg); opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+  <h1>Ready for your birthday surprise?</h1>
+  <button class="Absolutely" onclick="startExperience()">Yes</button>
+  <button class="Hmm... try again" onclick="alert('Wrong answer 😏')">No</button>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page">
+  <div id="typewriter" class="border-soft"></div>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="page">
+  <h2>Happy Birthday</h2>
+  <div id="lyrics" class="border-glow"></div>
+</div>
+
+<audio id="sharedSong" src="timeless.mp3"></audio>
+
+<script>
+const song = document.getElementById('sharedSong');
+
+const message = [
+  "Happy Birthday, Syika 🎂💖",
+  "Statistically speaking... people born June,11 are 100% more amazing than everyone else.",
+  "You’re like Wi-Fi. I don’t always see you, but I always feel your connection. 🧠❤️",
+  "Seriously though, your existence makes this timeline significantly better.",
+  "Eat cake like calories don’t exist,",
+  "Like a lyric from a Taylor Swift song, you’re the line everyone remembers",
+  "the part that plays in slow motion, heart first, fearless.",
+  "And just like in the bridge of every great love song…",
+  "this is where the magic starts. 💫"
+].join("\n\n");
+
+const chorusStart = 45;
+const lyricsLines = [
+  { time: 0.0, text: "In another life, you still would've turned my head\n" },
+  { time: 10.0, text: "Even if we'd met\n" },
+  { time: 16.0, text: "On a crowded street in 1944\n" },
+  { time: 34.0, text: "And you were headed off to fight in the war\n" },
+  { time: 32.0, text: "You still would've been mine\n" },
+  { time: 31.0, text: "We would have been timeless\n" }
+];
+
+function startExperience() {
+  go(2);
+  song.currentTime = 35;
+  song.play();
+  // Batasi akhir lagu
+  const songEndTime = 80; // detik
+  const onTimeUpdate = () => {
+    if (song.currentTime >= songEndTime) {
+      song.pause();
+      song.currentTime = songEndTime;
+      song.removeEventListener('timeupdate', onTimeUpdate);
+    }
+  };
+  song.addEventListener('timeupdate', onTimeUpdate);
+  startTypewriter(() => {
+    go(3);
+    startLyricsTypewriter();
+    startHearts();
+    startFlowers();
+    createSparkles();
+  });
+}
+
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + page).classList.add('active');
+  document.body.classList.toggle('flower-bg', page === 3);
+}
+
+function startTypewriter(callback) {
+  const el = document.getElementById('typewriter');
+  let i = 0;
+  el.innerText = "";
+  (function type() {
+    if (i < message.length) {
+      el.innerText += message.charAt(i++);
+      setTimeout(type, 40);
+    } else {
+      setTimeout(callback, 1000);
+    }
+  })();
+}
+
+// Typewriter untuk halaman 3 (lirik)
+function startLyricsTypewriter() {
+  const lyricsDiv = document.getElementById('lyrics');
+  lyricsDiv.innerText = ''; // bersih dulu
+
+  let lineIndex = 0;
+
+  function typeLine() {
+    if (lineIndex >= lyricsLines.length) return;
+    const line = lyricsLines[lineIndex];
+    const p = document.createElement('p');
+    lyricsDiv.appendChild(p);
+    let charIndex = 0;
+
+    function typeChar() {
+      if (charIndex < line.text.length) {
+        p.innerText += line.text.charAt(charIndex++);
+        setTimeout(typeChar, 80);
+      } else {
+        lineIndex++;
+        setTimeout(typeLine, 530);
+      }
+    }
+
+    typeChar();
+  }
+
+  typeLine();
+}
+
+// Hearts, flowers, sparkles
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }, 600);
+}
+
+function startFlowers() {
+  setInterval(() => {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.innerText = '🌸';
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.fontSize = (16 + Math.random() * 20) + 'px';
+    flower.style.animationDuration = (4 + Math.random() * 3) + 's';
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 7000);
+  }, 500);
+}
+
+function createSparkles() {
+  const container = document.getElementById('page3');
+  for (let i = 0; i < 20; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.top = Math.random() * 100 + '%';
+    sparkle.style.left = Math.random() * 100 + '%';
+    container.appendChild(sparkle);
+  }
+}
+</script>
+
+</body>
+</html>
